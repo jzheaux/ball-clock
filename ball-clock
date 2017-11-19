@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+if [ ! -f target/ball-clock.jar ]; then
+  mvn clean install
+fi
+
+java -cp target/ball-clock.jar com.joshcummings.ballclock.BallClockSimulation $@
+
+
