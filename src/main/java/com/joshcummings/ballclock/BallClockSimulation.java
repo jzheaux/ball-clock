@@ -99,6 +99,7 @@ public class BallClockSimulation {
             simulation.setView(view);
             simulation.setVerbose(parsed.verbose());
 
+
             Timer timer = new Timer();            
             BallClockMachine machine = simulation.runSimulation();
             timer.snap();

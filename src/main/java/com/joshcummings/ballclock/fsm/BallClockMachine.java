@@ -1,7 +1,9 @@
 package com.joshcummings.ballclock.fsm;
 
+import com.joshcummings.ballclock.model.Ball;
 import com.joshcummings.ballclock.model.Hopper;
 import com.joshcummings.ballclock.model.Track;
+import java.util.ArrayDeque;
 
 /**
  * The state machine representing a ball clock
@@ -35,7 +37,29 @@ public class BallClockMachine {
         } else {
             current.next();
 
-            hopper.sendBall(oneMinute);
+            Ball next = hopper.next();
+            ArrayDeque<Ball> overflow = oneMinute.addBall(next);
+            if ( overflow != null ) {
+                while ( !overflow.isEmpty() ) {
+                    hopper.returnBall(overflow.pollLast());
+                }
+                
+                overflow = fiveMinutes.addBall(next);
+                if ( overflow != null ) {
+                    while ( !overflow.isEmpty() ) {
+                        hopper.returnBall(overflow.pollLast());
+                    }
+                    
+                    overflow = oneHour.addBall(next);
+                    if ( overflow != null ) {
+                        while ( !overflow.isEmpty() ) {
+                            hopper.returnBall(overflow.pollLast());
+                        }
+                        
+                        hopper.returnBall(next);
+                    }
+                }
+            }
             return true;
         }
     }

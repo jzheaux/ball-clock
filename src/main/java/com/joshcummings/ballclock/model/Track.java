@@ -28,17 +28,19 @@ public class Track {
         this.hopper = hopper;
     }
     
-    public void addBall(Ball ball) {
+    public CappedArrayDeque<Ball> addBall(Ball ball) {
         if ( !balls.offerLast(ball) ) {
-            while ( !balls.isEmpty() ) {
+            return balls;
+            /*while ( !balls.isEmpty() ) {
                 hopper.returnBall(balls.pollLast());
             }
             if ( next == null ) {
                 hopper.returnBall(ball);
             } else {
                 next.addBall(ball);
-            }
+            }*/
         }
+        return null;
     }
     
     public Collection<Ball> balls() {
