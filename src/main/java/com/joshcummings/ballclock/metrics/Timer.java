@@ -5,12 +5,17 @@ package com.joshcummings.ballclock.metrics;
  */
 public class Timer {
     private long now = System.currentTimeMillis();
-
+    private long snap;
+    
     public void start() {
         now = System.currentTimeMillis();
     }
 
     public long snap() {
-        return System.currentTimeMillis() - now;
+        return snap = System.currentTimeMillis() - now;
+    }
+    
+    public long snapped() {
+        return snap;
     }
 }

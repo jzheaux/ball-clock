@@ -7,8 +7,6 @@ import com.joshcummings.ballclock.model.Track;
  * The state machine representing a ball clock
  */
 public class BallClockMachine {
-    private Integer  ts   = 0;
-
     private Terminus terminus;
     private Hopper   hopper;
     private Track    oneHour;
@@ -24,15 +22,19 @@ public class BallClockMachine {
         this.oneMinute = new Track(4, fiveMinutes, hopper);
 
         this.terminus = terminus;
+        this.current = new State(hopper);
     }
 
     public boolean transition() {
         // not convinced that creating an immutable state object is the "right" way.
         // I like the immutability, but it creates a couple of representation headaches.
-        current = new State(ts++, hopper); 
+        
+//        current = new State(ts++, hopper); 
         if (terminus.isTerminus(current)) {
             return false;
         } else {
+            current.next();
+
             hopper.sendBall(oneMinute);
             return true;
         }
@@ -58,6 +60,6 @@ public class BallClockMachine {
         return oneHour;
     }
     public Integer ts() {
-        return ts;
+        return current.ts();
     }
 }

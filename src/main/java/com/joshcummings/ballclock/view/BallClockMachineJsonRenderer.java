@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 
 import com.google.gson.Gson;
 import com.joshcummings.ballclock.fsm.BallClockMachine;
+import com.joshcummings.ballclock.model.Ball;
 
 /**
  * A convenience class for rendering the ball clock machine as JSON according to the spec
@@ -24,8 +25,8 @@ public class BallClockMachineJsonRenderer {
         this.gson = gson;
     }
     
-    public List<Integer> offsetByOne(Collection<Integer> balls) {
-        return balls.stream().map(i -> i + 1).collect(Collectors.toList());
+    public List<Integer> offsetByOne(Collection<Ball> balls) {
+        return balls.stream().map(i -> i.number() + 1).collect(Collectors.toList());
     }
     
     public String toJson(BallClockMachine machine) {

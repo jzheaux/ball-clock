@@ -2,14 +2,14 @@ package com.joshcummings.ballclock.model;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Deque;
-import java.util.concurrent.LinkedBlockingDeque;
+
+import com.joshcummings.ballclock.util.CappedArrayDeque;
 
 /**
  * A model for any non-hopper track in the ball clock
  */
 public class Track {
-    private Deque<Integer> balls;
+    private CappedArrayDeque<Ball> balls;
     
     /**
      * The track that the extra ball should overflow into.
@@ -23,13 +23,12 @@ public class Track {
     private Hopper hopper;
     
     public Track(int size, Track next, Hopper hopper) {
-        balls = new LinkedBlockingDeque<>(size);
+        balls = new CappedArrayDeque<>(size);
         this.next = next;
         this.hopper = hopper;
     }
     
-    public Collection<Integer> addBall(Integer ball) {
-        Collection<Integer> backToHopper = new ArrayList<Integer>();
+    public void addBall(Ball ball) {
         if ( !balls.offerLast(ball) ) {
             while ( !balls.isEmpty() ) {
                 hopper.returnBall(balls.pollLast());
@@ -40,10 +39,9 @@ public class Track {
                 next.addBall(ball);
             }
         }
-        return backToHopper;
     }
     
-    public Collection<Integer> balls() {
+    public Collection<Ball> balls() {
         return new ArrayList<>(balls);
     }
     

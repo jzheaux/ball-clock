@@ -22,7 +22,7 @@ public class PlainCommandLineView implements View {
 
     @Override
     public void renderTimer(Timer timer) {
-       long time = timer.snap();
+       long time = timer.snapped();
        System.out.printf("Completed in %d milliseconds (%.3f seconds)%n", time, time / 1000d);
     }
     

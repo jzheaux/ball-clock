@@ -1,8 +1,5 @@
 package com.joshcummings.ballclock;
 
-import static org.fusesource.jansi.Ansi.ansi;
-import static org.fusesource.jansi.Ansi.Color.RED;
-
 import com.beust.jcommander.JCommander;
 import com.beust.jcommander.ParameterException;
 import com.joshcummings.ballclock.config.CommandLineArgs;
@@ -104,6 +101,7 @@ public class BallClockSimulation {
 
             Timer timer = new Timer();            
             BallClockMachine machine = simulation.runSimulation();
+            timer.snap();
             
             view.renderMachine(machine);
             view.renderTimer(timer);
